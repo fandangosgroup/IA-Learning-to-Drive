@@ -9,11 +9,7 @@ public class ConnectionFactory {
 	public static Connection getConnetion(){
 		Connection conn = null;
 		try{
-			/**
-			 * Essa merda aqui, eu setei o endereço do meu mysql pra testar 
-			 * Preciso saber qual o endereço que vai estar hospedado o banco :p
-			 */
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/dbprojeto?user=root&useTimezone=true&serverTimezone=UTC");
+			conn = DriverManager.getConnection("jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_b481894670aeac7?user=baaf8787ff1507&password=c9b4bc164303c2a&useTimezone=true&serverTimezone=UTC");
 		}catch(SQLException ex) {
 			ex.printStackTrace();
 		}
