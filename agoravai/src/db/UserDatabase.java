@@ -1,0 +1,69 @@
+package db;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import application.User;
+
+public class UserDatabase implements Database<User>{
+	
+	private static PreparedStatement stmt = null;
+	
+	public UserDatabase() {}
+
+	@Override
+	public void insert(User user) {
+		String query = "INSERT INTO user(user_id, login, password, email) "
+					 + "VALUES(?,?,?,?)";
+		
+		try (Connection conn = ConnectionFactory.getConnetion()){
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, user.getId());
+			stmt.setString(2, user.getLogin());
+			stmt.setString(3, user.getPassword());
+			stmt.setString(4, user.getEmail());
+			stmt.execute();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@Override
+	public void update(User user) {
+		//TODO preciso saber quais campos vão poder ser alterados.
+	}
+
+	@Override
+	public void delete(Integer id) {
+		String query = "DELETE user "
+					 + "WHERE user_id = ?";
+		
+		try(Connection conn = ConnectionFactory.getConnetion()){
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, id);
+			stmt.execute();
+		} catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Função auxiliar para saber qual o ultimo id inserido na tabela.
+	 */
+	public static Integer getId() {
+		String query = "SELECT MAX(user_id)+1 FROM user";
+		Integer maxId = 0;
+		
+		try(Connection conn = ConnectionFactory.getConnetion()){
+			stmt = conn.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			maxId = rs.getInt(1);
+		} catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return maxId;
+	}
+}
