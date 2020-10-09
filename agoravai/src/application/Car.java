@@ -1,13 +1,15 @@
 package application;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class Car{
 	
-	private ArrayList<Integer> genome;
+	private ArrayList<Integer> genome =  new ArrayList<Integer>();
 	private Color color; //n faço ideia
 	private boolean isDead;
 	private int chanceMutation;
@@ -19,7 +21,7 @@ public class Car{
 		this.isDead = false;
 		this.setImageView();
 		this.setRandomGenome();
-		this.setPresetGenes();
+		//this.setPresetGenes();
 	}
 	
 	public void mutation() {
@@ -44,7 +46,15 @@ public class Car{
 	}
 	
 	private void setImageView(){
-		//load na imageview
+		 File file = new File("C:\\Users\\bruno\\Desktop\\car.png");
+         Image img = new Image(file.toURI().toString());
+         car = new ImageView(img);
+         car.setFitHeight(5);
+         car.setFitWidth(5);
+         car.setLayoutX(10);
+         car.setLayoutY(60);
+         car.setId("carro1");
+         
 	}
 	private void setRandomGenome() {
 		for(int i = 0; i < this.genome.size(); i++) {
@@ -54,5 +64,9 @@ public class Car{
 	
 	private void setPresetGenes() {
 		//load no arquivo de genes
+	}
+	
+	public ImageView getImageView() {
+		return this.car;
 	}
 }

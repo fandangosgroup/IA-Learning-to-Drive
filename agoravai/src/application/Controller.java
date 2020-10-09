@@ -11,19 +11,19 @@ public class Controller {
 	}
 	
 	public void moveUp() {
-		car.setLayoutY(car.getLayoutY() - 10);
+		car.setLayoutY(car.getLayoutY() - 7);
 	}
 	
 	public void moveDown() {
-		car.setLayoutY(car.getLayoutY() + 10);	
+		car.setLayoutY(car.getLayoutY() + 7);	
 	}
 	
 	public void moveLeft() {
-		car.setLayoutX(car.getLayoutX() - 10);
+		car.setLayoutX(car.getLayoutX() - 7);
 	}
 	
 	public void moveRight() {
-		car.setLayoutX(car.getLayoutX() + 10);
+		car.setLayoutX(car.getLayoutX() + 7);
 	}
 	
 }
