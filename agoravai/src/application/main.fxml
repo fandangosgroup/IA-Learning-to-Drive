@@ -7,11 +7,6 @@
 
 <AnchorPane fx:id="game" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainController">
    <children>
-      <ImageView fx:id="pista">
-         <image>
-            <Image url="@../../../../../Users/bruno/Desktop/pista.png" />
-         </image>
-      </ImageView>
       <AnchorPane layoutX="-42.0" layoutY="-85.0" prefHeight="352.0" prefWidth="370.0">
          <children>
             <Button fx:id="direita" layoutX="118.0" layoutY="299.0" mnemonicParsing="false" onAction="#direita" text="&gt;---&gt;" />

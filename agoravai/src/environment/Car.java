@@ -1,4 +1,4 @@
-package application;
+package environment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class Car{
 	}
 	
 	private void setImageView(){
-		 File file = new File("C:\\Users\\bruno\\Desktop\\car.png");
+		 File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\car.png");
          Image img = new Image(file.toURI().toString());
          car = new ImageView(img);
          car.setFitHeight(5);

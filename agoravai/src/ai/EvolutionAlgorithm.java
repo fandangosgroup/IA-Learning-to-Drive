@@ -1,4 +1,4 @@
-package application;
+package ai;
 
 public class EvolutionAlgorithm {
 	

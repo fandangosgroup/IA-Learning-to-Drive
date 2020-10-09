@@ -1,17 +1,15 @@
 package application;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javax.imageio.ImageIO;
-
+import environment.Car;
+import environment.DrawTrack;
+import environment.Sensors;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
@@ -25,7 +23,7 @@ public class mainController implements Initializable{
 	private AnchorPane game;
 	
 	private Sensors sesor;
-	private BufferedImage track; 
+	private DrawTrack track; 
 	private Controller controller;
 	private Car car;
 	
@@ -33,30 +31,25 @@ public class mainController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		this.car = new Car();
+		this.track = new DrawTrack(16);
+		this.setTrack();
 		game.getChildren().add(car.getImageView());
+		
 		controller = new Controller(car.getImageView());
 		//provisório
-		this.setTrack();
-		this.sesor = new Sensors(this.track, this.game);
-		
+
+		this.sesor = new Sensors(this.track.getTrack(), this.game);
 	
 	}
 	
 	private void setTrack() {
-		try {
-            this.track = ImageIO.read(new File("C:\\Users\\bruno\\Desktop\\pista.png"));
-        } catch (IOException ex) {
-            
-        }
+		ImageView img = this.track.getImgTrack();
+		this.game.getChildren().add(0, img);
 	}
 	@FXML
 	void direita() {
 		controller.moveRight();
 		ArrayList<Integer> result = this.sesor.scan((int)car.getImageView().getLayoutX(), (int)car.getImageView().getLayoutY());
-		
-		
-		
-		
 	}
 	@FXML
 	void esquerda() {
