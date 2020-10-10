@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import db.UserDatabase;
 import environment.Car;
 import environment.DrawTrack;
 import environment.Sensors;
@@ -31,7 +32,7 @@ public class mainController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		this.car = new Car();
-		this.track = new DrawTrack(16);
+		this.track = new DrawTrack(17);
 		this.setTrack();
 		game.getChildren().add(car.getImageView());
 		
