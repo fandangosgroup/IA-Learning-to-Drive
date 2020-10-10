@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 public class Car{
 	
 	private ArrayList<Integer> genome =  new ArrayList<Integer>();
-	private Color color; //n faço ideia
+	//private Color color;
 	private boolean isDead;
 	private int chanceMutation;
 	private int severyMutation;
@@ -21,6 +21,9 @@ public class Car{
 		this.isDead = false;
 		this.setImageView();
 		this.setRandomGenome();
+		for(Integer i :this.genome) {
+			System.out.println("gernoma: " + i.toString());
+		}
 		//this.setPresetGenes();
 	}
 	
@@ -45,6 +48,10 @@ public class Car{
 		this.isDead = true;
 	}
 	
+	public Boolean getIsDead() {
+		return this.isDead;
+	}
+	
 	private void setImageView(){
 		 File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\car.png");
          Image img = new Image(file.toURI().toString());
@@ -52,9 +59,8 @@ public class Car{
          car.setFitHeight(5);
          car.setFitWidth(5);
          car.setLayoutX(10);
-         car.setLayoutY(60);
-         car.setId("carro1");
-         
+         car.setLayoutY(40);
+         car.setId("1");
 	}
 	private void setRandomGenome() {
 		for(int i = 0; i < this.genome.size(); i++) {
