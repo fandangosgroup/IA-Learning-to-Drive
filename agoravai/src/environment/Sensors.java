@@ -15,7 +15,7 @@ public class Sensors {
 	private int positionX;
 	private int positionY;
 	private AnchorPane game;
-	private Boolean mostraSensor = true;
+	private Boolean mostraSensor = false;
 	private Integer sensorNormalRange = 80;
 	private Integer sensorDiagonalRange = 65;
 	
@@ -24,8 +24,8 @@ public class Sensors {
 		this.game = game;
 	}
 	
-	public ArrayList<Integer> scan(int x, int y){
-		ArrayList<Integer> ret = new ArrayList<Integer>();
+	public ArrayList<Double> scan(int x, int y){
+		ArrayList<Double> ret = new ArrayList<Double>();
 		this.positionX = x;
 		this.positionY = y;
 		this.game.getChildren().remove(3, this.game.getChildren().size());
@@ -38,11 +38,14 @@ public class Sensors {
 		ret.add(this.downRight());
 		ret.add(this.downLeft());
 		
+		for(int i = 0; i < 8; i++) {
+			ret.set(i, ret.get(i) / 10000);
+		}
 		
 		return ret;
 	}
 	
-	public int up() {
+	public double up() {
 		
 		int pixNumber = 0;
 		
@@ -56,7 +59,7 @@ public class Sensors {
         return 0; 
     }
 	
-	public int down() {
+	public double down() {
 		int pixNumber = 0;
 
 		for (int y = this.positionY; y < this.positionY + this.sensorNormalRange ; y ++){
@@ -70,7 +73,7 @@ public class Sensors {
         return 0; 
 	}
 	
-	public int right() {
+	public double right() {
 		int pixNumber = 0;
 		
 		for (int x = this.positionX; x < this.positionX + this.sensorNormalRange ; x ++){
@@ -84,7 +87,7 @@ public class Sensors {
         return 0; 
 	}
 	
-	public int left() {
+	public double left() {
 		int pixNumber = 0;
 		
 		for (int x = this.positionX; x > this.positionX - this.sensorNormalRange ; x--){
@@ -97,7 +100,7 @@ public class Sensors {
         return 0; 
 	}
 	
-	public int upRight() {
+	public double upRight() {
 		int pixNumber = 0;
 		int y = this.positionY;
 		for (int x = this.positionX; x < this.positionX + this.sensorDiagonalRange; x++) {
@@ -111,7 +114,7 @@ public class Sensors {
 		return 0;
 	}
 	
-	public int upLeft() {
+	public double upLeft() {
 		int pixNumber = 0;
 		int y = this.positionY;
 		for (int x = this.positionX; x > this.positionX - this.sensorDiagonalRange; x--) {
@@ -125,7 +128,7 @@ public class Sensors {
 		return 0;
 	}
 	
-	public int downRight() {
+	public double downRight() {
 		int pixNumber = 0;
 		int x = this.positionX;
 		for (int y = this.positionY; y < this.positionY + this.sensorDiagonalRange; y++) {
@@ -140,7 +143,7 @@ public class Sensors {
 		return 0;
 	}
 	
-	public int downLeft() {
+	public double downLeft() {
 		int pixNumber = 0;
 		int x = this.positionX;
 		for (int y = this.positionY; y < this.positionY + this.sensorDiagonalRange; y++) {

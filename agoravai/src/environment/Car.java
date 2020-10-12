@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 
 public class Car{
 	
+	private int genesNumber = 160;
 	private ArrayList<Integer> genome =  new ArrayList<Integer>();
 	//private Color color;
 	private boolean isDead;
@@ -17,13 +18,10 @@ public class Car{
 	private int chanceExtremeMutation;
 	private ImageView car;
 	
-	public Car() {
+	public Car(int i) {
 		this.isDead = false;
-		this.setImageView();
+		this.setImageView(i);
 		this.setRandomGenome();
-		for(Integer i :this.genome) {
-			System.out.println("gernoma: " + i.toString());
-		}
 		//this.setPresetGenes();
 	}
 	
@@ -52,18 +50,18 @@ public class Car{
 		return this.isDead;
 	}
 	
-	private void setImageView(){
+	private void setImageView(Integer i){
 		 File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\car.png");
          Image img = new Image(file.toURI().toString());
          car = new ImageView(img);
          car.setFitHeight(5);
          car.setFitWidth(5);
-         car.setLayoutX(10);
-         car.setLayoutY(40);
-         car.setId("1");
+         car.setLayoutX(50);
+         car.setLayoutY(180);
+         car.setId(i.toString());
 	}
 	private void setRandomGenome() {
-		for(int i = 0; i < this.genome.size(); i++) {
+		for(int i = 0; i < this.genesNumber; i++) {
 			this.genome.add((int) (1000d - Math.random() * 1000d) );
 		}
 	}
@@ -75,4 +73,9 @@ public class Car{
 	public ImageView getImageView() {
 		return this.car;
 	}
+	
+	public ArrayList<Integer> getGenome(){
+		return this.genome;
+	}
+	
 }

@@ -3,8 +3,10 @@ package application;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
+import ai.NeuralNetwork;
 import db.UserDatabase;
 import environment.Car;
 import environment.Collider;
@@ -27,18 +29,23 @@ public class mainController implements Initializable{
 	private Sensors sesor;
 	private DrawTrack track; 
 	private Controller controller;
-	private Car car;
+	private ArrayList<Car> car;
 	private Collider collider;
+	private NeuralNetwork nn;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		this.car = new Car();
-		this.track = new DrawTrack(17);
+		this.car = new ArrayList<Car>();
+		for(int i = 0; i < 1000; i++) {
+			this.car.add(new Car(i));
+			game.getChildren().add(car.get(i).getImageView());
+		}
+		this.nn = new NeuralNetwork();
+		this.track = new DrawTrack(UserDatabase.getId() - 1);
 		this.setTrack();
 		collider = new Collider(this.track);
-		game.getChildren().add(car.getImageView());
-		controller = new Controller(this.car);
+		
+		controller = new Controller();
 		this.sesor = new Sensors(this.track.getTrack(), this.game);
 	
 	}
@@ -47,38 +54,55 @@ public class mainController implements Initializable{
 		ImageView img = this.track.getImgTrack();
 		this.game.getChildren().add(0, img);
 	}
-	@FXML
-	void direita() {
-		controller.moveRight();
-		if(collider.verify(this.car)) {
-			this.car.Kill();
-		}
-		
-		ArrayList<Integer> result = this.sesor.scan((int)car.getImageView().getLayoutX(), (int)car.getImageView().getLayoutY());
-	}
-	@FXML
-	void esquerda() {
-		controller.moveLeft();
-		if(collider.verify(this.car)) {
-			this.car.Kill();
-		}
-		ArrayList<Integer> result = sesor.scan((int)car.getImageView().getLayoutX(), (int)car.getImageView().getLayoutY());
-	}
-	@FXML
-	void cima() {
-		controller.moveUp();
-		if(collider.verify(this.car)) {
-			this.car.Kill();
-		}
-		ArrayList<Integer> result = sesor.scan((int)car.getImageView().getLayoutX(), (int)car.getImageView().getLayoutY());
-	}
-	@FXML
-	void baixo() {
-		controller.moveDown();
-		if(collider.verify(this.car)) {
-			this.car.Kill();
-		}
-		ArrayList<Integer> result = sesor.scan((int)car.getImageView().getLayoutX(), (int)car.getImageView().getLayoutY());
-	}
 	
+	@FXML
+	void direita(Car car) {
+		controller.moveRight(car);
+		if(collider.verify(car)) {
+			car.Kill();
+		}
+	
+	}
+	@FXML
+	void esquerda(Car car) {
+		controller.moveLeft(car);
+		if(collider.verify(car)) {
+			car.Kill();
+		}
+	}
+	@FXML
+	void cima(Car car) {
+		controller.moveUp(car);
+		if(collider.verify(car)) {
+			car.Kill();
+		}
+	}
+	@FXML
+	void baixo(Car car) {
+		controller.moveDown(car);
+		if(collider.verify(car)) {
+			car.Kill();
+		}
+	}
+	//DEBUG PROVISÒRIO
+	@FXML
+	void pensa() {
+		for(int i =0; i < this.car.size(); i++) {
+			ArrayList<Double> scan = sesor.scan((int)car.get(i).getImageView().getLayoutX(), (int)car.get(i).getImageView().getLayoutY());
+			ArrayList<Double> sinapse = this.nn.getSinapse(scan, car.get(i));
+			
+			if(sinapse.get(0) > sinapse.get(1) && sinapse.get(0) > sinapse.get(2) && sinapse.get(0) > sinapse.get(3)) {
+				this.cima(this.car.get(i));
+			}
+			if(sinapse.get(1) > sinapse.get(0) && sinapse.get(1) > sinapse.get(2) && sinapse.get(1) > sinapse.get(3)) {
+				this.direita(this.car.get(i));
+			}
+			if(sinapse.get(2) > sinapse.get(0) && sinapse.get(2) > sinapse.get(1) && sinapse.get(2) > sinapse.get(3)) {
+				this.esquerda(this.car.get(i));
+			}
+			if(sinapse.get(3) > sinapse.get(0) && sinapse.get(3) > sinapse.get(1) && sinapse.get(3) > sinapse.get(2)) {
+				this.baixo(this.car.get(i));
+			}
+		}
+	}
 }

@@ -5,31 +5,26 @@ import javafx.scene.image.ImageView;
 
 public class Controller {
 	
-	private Car car;
 	
-	public Controller(Car car) {
-		this.car = car;
-	}
-	
-	public void moveUp() {
+	public void moveUp(Car car) {
 		if(!car.getIsDead()) {
 			car.getImageView().setLayoutY(car.getImageView().getLayoutY() - 7);	
 		}
 	}
 	
-	public void moveDown() {
+	public void moveDown(Car car) {
 		if(!car.getIsDead()) {
 			car.getImageView().setLayoutY(car.getImageView().getLayoutY() + 7);	
 		}
 	}
 	
-	public void moveLeft() {
+	public void moveLeft(Car car) {
 		if(!car.getIsDead()) {
 			car.getImageView().setLayoutX(car.getImageView().getLayoutX() - 7);
 		}
 	}
 	
-	public void moveRight() {
+	public void moveRight(Car car) {
 		if(!car.getIsDead()) {
 			car.getImageView().setLayoutX(car.getImageView().getLayoutX() + 7);
 		}
