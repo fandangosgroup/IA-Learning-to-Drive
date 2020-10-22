@@ -26,7 +26,7 @@ public class mainController implements Initializable{
 	@FXML
 	private AnchorPane game;
 	
-	private Sensors sesor;
+	private Sensors sensor;
 	private DrawTrack track; 
 	private Controller controller;
 	private ArrayList<Car> car;
@@ -36,17 +36,18 @@ public class mainController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.car = new ArrayList<Car>();
-		for(int i = 0; i < 1000; i++) {
+		for(int i = 0; i < 10; i++) {
 			this.car.add(new Car(i));
 			game.getChildren().add(car.get(i).getImageView());
 		}
+		System.out.println(game.getChildren().toString());
 		this.nn = new NeuralNetwork();
-		this.track = new DrawTrack(UserDatabase.getId() - 1);
+		this.track = new DrawTrack(17);
 		this.setTrack();
 		collider = new Collider(this.track);
 		
 		controller = new Controller();
-		this.sesor = new Sensors(this.track.getTrack(), this.game);
+		this.sensor = new Sensors(this.track.getTrack(), this.game);
 	
 	}
 	
@@ -88,21 +89,35 @@ public class mainController implements Initializable{
 	@FXML
 	void pensa() {
 		for(int i =0; i < this.car.size(); i++) {
-			ArrayList<Double> scan = sesor.scan((int)car.get(i).getImageView().getLayoutX(), (int)car.get(i).getImageView().getLayoutY());
-			ArrayList<Double> sinapse = this.nn.getSinapse(scan, car.get(i));
+			ArrayList<Double> scan = new ArrayList<Double>();
+			ArrayList<Double> sinapse = new ArrayList<Double>();
+			if(this.car.get(i).getIsDead().equals(false)) {
+				scan = sensor.scan((int)car.get(i).getImageView().getLayoutX(), (int)car.get(i).getImageView().getLayoutY());
+				sinapse = this.nn.getSinapse(scan, car.get(i));
 			
-			if(sinapse.get(0) > sinapse.get(1) && sinapse.get(0) > sinapse.get(2) && sinapse.get(0) > sinapse.get(3)) {
-				this.cima(this.car.get(i));
+				if(sinapse.get(0) > sinapse.get(1) && sinapse.get(0) > sinapse.get(2) && sinapse.get(0) > sinapse.get(3)) {
+					System.out.println("CIMA");
+					System.out.println(this.car.get(i).getImageView().toString());
+					this.cima(this.car.get(i));
+				}
+				if(sinapse.get(1) > sinapse.get(0) && sinapse.get(1) > sinapse.get(2) && sinapse.get(1) > sinapse.get(3)) {
+					System.out.println("DIREITA");
+					System.out.println(this.car.get(i).getImageView().toString());
+					this.direita(this.car.get(i));
+				}
+				if(sinapse.get(2) > sinapse.get(0) && sinapse.get(2) > sinapse.get(1) && sinapse.get(2) > sinapse.get(3)) {
+					System.out.println("ESQUERDA");
+					System.out.println(this.car.get(i).getImageView().toString());
+					this.esquerda(this.car.get(i));
+				}
+				if(sinapse.get(3) > sinapse.get(0) && sinapse.get(3) > sinapse.get(1) && sinapse.get(3) > sinapse.get(2)) {
+					System.out.println("BAIXO");
+					System.out.println(this.car.get(i).getImageView().toString());
+					this.baixo(this.car.get(i));
+				}
+			
 			}
-			if(sinapse.get(1) > sinapse.get(0) && sinapse.get(1) > sinapse.get(2) && sinapse.get(1) > sinapse.get(3)) {
-				this.direita(this.car.get(i));
-			}
-			if(sinapse.get(2) > sinapse.get(0) && sinapse.get(2) > sinapse.get(1) && sinapse.get(2) > sinapse.get(3)) {
-				this.esquerda(this.car.get(i));
-			}
-			if(sinapse.get(3) > sinapse.get(0) && sinapse.get(3) > sinapse.get(1) && sinapse.get(3) > sinapse.get(2)) {
-				this.baixo(this.car.get(i));
-			}
+
 		}
 	}
 }

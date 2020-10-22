@@ -56,14 +56,16 @@ public class Car{
          car = new ImageView(img);
          car.setFitHeight(5);
          car.setFitWidth(5);
-         car.setLayoutX(50);
-         car.setLayoutY(180);
+         car.setLayoutX(20);
+         car.setLayoutY(20);
          car.setId(i.toString());
 	}
+	
 	private void setRandomGenome() {
 		for(int i = 0; i < this.genesNumber; i++) {
 			this.genome.add((int) (1000d - Math.random() * 1000d) );
 		}
+		//System.out.println(this.genome);
 	}
 	
 	private void setPresetGenes() {

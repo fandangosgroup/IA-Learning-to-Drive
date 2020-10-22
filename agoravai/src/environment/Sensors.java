@@ -28,7 +28,6 @@ public class Sensors {
 		ArrayList<Double> ret = new ArrayList<Double>();
 		this.positionX = x;
 		this.positionY = y;
-		this.game.getChildren().remove(3, this.game.getChildren().size());
 		ret.add(this.up());
 		ret.add(this.down());
 		ret.add(this.right());
@@ -39,7 +38,7 @@ public class Sensors {
 		ret.add(this.downLeft());
 		
 		for(int i = 0; i < 8; i++) {
-			ret.set(i, ret.get(i) / 10000);
+			ret.set(i, ret.get(i) * 10);
 		}
 		
 		return ret;
@@ -159,6 +158,7 @@ public class Sensors {
 	}
 	
 	public void drawSensor(int x, int y) {
+		//this.game.getChildren().remove(3, this.game.getChildren().size());
 		
 		if(this.mostraSensor.equals(true)) {
 			File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\sensor.png");

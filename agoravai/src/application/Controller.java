@@ -9,6 +9,7 @@ public class Controller {
 	public void moveUp(Car car) {
 		if(!car.getIsDead()) {
 			car.getImageView().setLayoutY(car.getImageView().getLayoutY() - 7);	
+			
 		}
 	}
 	

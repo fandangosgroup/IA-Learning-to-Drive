@@ -17,4 +17,5 @@
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="ai.NeuralNetwork"/>
     <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="db.UserDatabase"/>
 </qualifiedTypeNameHistroy>
