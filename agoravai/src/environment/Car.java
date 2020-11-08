@@ -56,8 +56,8 @@ public class Car{
          car = new ImageView(img);
          car.setFitHeight(5);
          car.setFitWidth(5);
-         car.setLayoutX(20);
-         car.setLayoutY(20);
+         car.setLayoutX(30);
+         car.setLayoutY(35);
          car.setId(i.toString());
 	}
 	

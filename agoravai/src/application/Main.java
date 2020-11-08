@@ -11,12 +11,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			User user = new User(UserDatabase.getId(),"testesegundaPista","1530","testandoPista@hotmail.com");
-			Register rg = new Register(user);
-			rg.register();
+			//User user = new User(UserDatabase.getId(),"testesegundaPista","1530","testandoPista@hotmail.com");
+			//Register rg = new Register(user);
+			//rg.register();
 			AnchorPane root = FXMLLoader.load(getClass().getResource("main.fxml"));
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root,600,600);
 			primaryStage.setScene(scene);
+			
 			primaryStage.show(); 
 		} catch(Exception e) {
 			e.printStackTrace();

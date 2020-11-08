@@ -16,10 +16,10 @@ public class Collider {
 		int instantRGB = this.track.getTrack().getRGB(x, y);
 		
 		Color c = new Color(instantRGB);
-        int blue = c.getBlue();
-        int red = c.getRed();
-        int green = c.getGreen();
+        Integer blue = c.getBlue();
+        Integer red = c.getRed();
+        Integer green = c.getGreen();
         
-		return  (blue + red + green) < 20? true : false;
+        return (blue + red + green) < 20 ? true : false;
 	}
 }

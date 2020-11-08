@@ -48,7 +48,7 @@ public class Sensors {
 		
 		int pixNumber = 0;
 		
-		for (int y = this.positionY; y > this.positionY-this.sensorNormalRange ; y --){
+		for (int y = this.positionY; y > this.positionY-this.sensorNormalRange && y > 0 ; y --){
             if(this.verificaRGB(this.positionX, y)){
                 return pixNumber;
             }
