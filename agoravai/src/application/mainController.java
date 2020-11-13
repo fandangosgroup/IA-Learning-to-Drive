@@ -1,6 +1,7 @@
 package application;
 
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -45,10 +47,16 @@ public class mainController implements Initializable{
 	private int carnumber = 1000;
 
 	private int gambi = 0;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		ea = new EvolutionAlgorithm(carnumber, 1, 1000, game);
+		startGame();
+	
+	}
+	
+	public void startGame() {
+		ea = new EvolutionAlgorithm(carnumber, 1, 900, game);
 		this.car = ea.getGeneration();
 		
 		
@@ -68,7 +76,6 @@ public class mainController implements Initializable{
         );
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
-	
 	}
 	
 	private void setTrack() {
@@ -99,6 +106,11 @@ public class mainController implements Initializable{
 		if(this.timer >= this.ea.getTimeGeneration()) {
 			this.hd.getCarPointer(car);
 			this.ea.artifialSelection(car, track);
+			try {
+				reset();
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
 		}
 		for(int i =0; i < this.car.size(); i++) {
 			ArrayList<Double> scan = new ArrayList<Double>();
@@ -145,4 +157,80 @@ public class mainController implements Initializable{
 	void usuarioBaixo() {
 		controller.moveDown(this.car.get(0));
 		}
+	@FXML
+	void reset() throws Throwable {
+		tl.stop();
+		finalize();
+		
+		final Button restartButton = new Button( "Restart" );
+		restartButton.setLayoutX(434);
+		restartButton.setLayoutY(277);
+		restartButton.setOnAction(e -> {
+            try {
+				reset();
+			} catch (Throwable e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        });
+		
+		
+		final Button IaRemoveButton = new Button( "Delete IA" );
+		IaRemoveButton.setLayoutX(450);
+		IaRemoveButton.setLayoutY(277);
+		IaRemoveButton.setOnAction(e -> {
+			File genes = new File("genes");
+			File score = new File("score");
+			
+			genes.delete();
+			score.delete();
+        });
+		
+		final Button StopButton = new Button( "Stop" );
+		StopButton.setLayoutX(448);
+		StopButton.setLayoutY(2);
+		StopButton.setOnAction(e -> {stop();});
+		final Button UpButton = new Button( "CIMA" );
+		UpButton.setLayoutX(284);
+		UpButton.setLayoutY(263);
+		UpButton.setOnAction(e -> {usuarioCima();});
+		final Button DownButton = new Button( "BAIXO" );
+		DownButton.setLayoutX(282);
+		DownButton.setLayoutY(313);
+		DownButton.setOnAction(e -> {usuarioBaixo();});
+		final Button LeftButton = new Button( "ESQUERDA" );
+		LeftButton.setLayoutX(206);
+		LeftButton.setLayoutY(288);
+		LeftButton.setOnAction(e -> {usuarioEsquerda();});
+		final Button RightButton = new Button( "DIREITA" );
+		RightButton.setLayoutX(334);
+		RightButton.setLayoutY(288);
+		RightButton.setOnAction(e -> {usuarioDireita();});
+		
+		this.game.getChildren().clear();
+		
+		this.game.getChildren().add(restartButton);
+		this.game.getChildren().add(StopButton);
+		this.game.getChildren().add(UpButton);
+		this.game.getChildren().add(DownButton);
+		this.game.getChildren().add(LeftButton);
+		this.game.getChildren().add(RightButton);
+		this.game.getChildren().add(IaRemoveButton);
+		
+		this.timer = 0;
+		this.sensor = null;
+		this.track = null; 
+		this.controller = null;
+		this.car = null;
+		this.collider = null;
+		this.nn = null;
+		this.hd = null;
+		this. ea = null;
+		this.tl = null;
+		startGame();
+	}
+	@FXML
+	void stop() {
+		System.exit(1);
+	}
 }

@@ -16,8 +16,8 @@ public class Car{
 	private ArrayList<Double> genome =  new ArrayList<Double>();
 	//private Color color;
 	private boolean isDead;
-	private int chanceMutation = 50;
-	private Double severyMutation = 0.08d;
+	private int chanceMutation = 90;
+	private Double severyMutation = 0.09d;
 	private int chanceExtremeMutation = 1;
 	private ImageView car;
 	private int ponto;
@@ -25,9 +25,16 @@ public class Car{
 	public Car(int i) {
 		this.isDead = false;
 		this.setImageView(i);
-		//this.setRandomGenome();
-		this.setPresetGenes();
-		this.mutation();
+		
+		File genes = new File("genes");
+		
+		if(genes.exists()) {
+			this.setPresetGenes();
+			this.mutation();
+		}else {
+			this.setRandomGenome();
+		}
+		
 	}
 	
 	public void mutation() {

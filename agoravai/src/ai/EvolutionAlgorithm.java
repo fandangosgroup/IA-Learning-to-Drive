@@ -43,19 +43,23 @@ public class EvolutionAlgorithm {
 		Double min = 100000d;
 		int carIndex = 0;
 		for(int i = 0; i < car.size(); i++) {
-			if(!car.get(i).getIsDead()) {
+			if(car.get(i).getIsDead()) {
+				car.get(i).setPonto(car.get(i).getPonto() + 15);
+			}
 				Double dab = Math.sqrt(Math.pow(499 - car.get(i).getImageView().getLayoutX(), 2) + Math.pow(499 - car.get(i).getImageView().getLayoutY(), 2));
-				System.out.println("distacia euclidiana: " + dab);
-				System.out.println("ponto final: " + dab * car.get(i).getPonto());
+				//System.out.println("distacia euclidiana: " + dab);
+				//System.out.println("ponto final: " + dab * car.get(i).getPonto());
 				if(min > (dab * car.get(i).getPonto())) {
 					min = dab * car.get(i).getPonto();
 					carIndex = i;
 				}
-			}
+			
 		}
 		System.out.println("O MELHOR CARRO FOI O: " + carIndex);
 		System.out.println("COM PONTUACAO DE : " + min);
-		this.saveGenesState(car.get(carIndex));
+		System.out.println("-----------------------------------------------------");
+		
+		this.saveGenesState(car.get(carIndex), min);
 		
 	}
 	
@@ -69,23 +73,51 @@ public class EvolutionAlgorithm {
 		
 	}
 	//salva os melhores genes
-	private void saveGenesState(Car car) {
+	private void saveGenesState(Car car, double fitness) {
 		File genes = new File("genes");
-			
+		File score = new File("score");
+		
+		double oldFitness = 999999999;
+		
 		try {
-			
-         genes.delete();
 
-         genes.createNewFile();
+            if (score.exists()) {
+               
+               ObjectInputStream objInput2 = new ObjectInputStream(new FileInputStream(score));
+               oldFitness = (double) objInput2.readObject();
+               objInput2.close();
+           }
+         } catch(IOException erro1) {
+              System.out.printf("Erro: %s", erro1.getMessage());
+         } catch(ClassNotFoundException erro2) {
+              System.out.printf("Erro: %s", erro2.getMessage());
+         }
+		
+		System.out.println("Pontuação do arquivo: "+oldFitness);
+		if(oldFitness > fitness) {
+			System.out.println("É MELHOR VOU SALVAR !!");
+			try {
+				
+		         genes.delete();
+		         score.delete();
 
-         ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(genes));
-         objOutput.writeObject(car.getGenome());
-         objOutput.close();
+		         genes.createNewFile();
+		         score.createNewFile();
 
-       } catch(IOException erro) {
-           System.out.printf("Erro: %s", erro.getMessage());
-       }
-		System.exit(0);
+		         ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(genes));
+		         objOutput.writeObject(car.getGenome());
+		         objOutput.close();
+		         
+		         ObjectOutputStream objOutput2 = new ObjectOutputStream(new FileOutputStream(score));
+		         objOutput2.writeObject(fitness);
+		         objOutput2.close();
+
+		       } catch(IOException erro) {
+		           System.out.printf("Erro: %s", erro.getMessage());
+		       }
+		}
+		
+		//System.exit(0);
 	}
 	public int getTimeGeneration() {
 		return this.timeGeneration;
