@@ -32,6 +32,7 @@ public class mainController implements Initializable{
 	@FXML
 	private AnchorPane game;
 	
+	private int timer = 0;
 	private Sensors sensor;
 	private DrawTrack track; 
 	private Controller controller;
@@ -47,7 +48,7 @@ public class mainController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		ea = new EvolutionAlgorithm(carnumber, 7, 100, game);
+		ea = new EvolutionAlgorithm(carnumber, 1, 1000, game);
 		this.car = ea.getGeneration();
 		
 		
@@ -63,7 +64,7 @@ public class mainController implements Initializable{
 		this.hd.setPointerMatrix(track, game);	
 		
 		this.tl = new Timeline(
-		new KeyFrame(Duration.millis(100), e -> this.pensa())
+		new KeyFrame(Duration.millis(10), e -> this.pensa())
         );
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
@@ -75,26 +76,30 @@ public class mainController implements Initializable{
 		this.game.getChildren().add(0, img);
 	}
 	
-	@FXML
+
 	void direita(Car car) {
 		controller.moveRight(car);
 	}
-	@FXML
+
 	void esquerda(Car car) {
 		controller.moveLeft(car);
 	}
-	@FXML
+
 	void cima(Car car) {
 		controller.moveUp(car);
 	}
-	@FXML
+
 	void baixo(Car car) {
 		controller.moveDown(car);
 	}
 	//DEBUG PROVISÒRIO
 	@FXML
 	void pensa() {
-		
+		this.timer++;
+		if(this.timer >= this.ea.getTimeGeneration()) {
+			this.hd.getCarPointer(car);
+			this.ea.artifialSelection(car, track);
+		}
 		for(int i =0; i < this.car.size(); i++) {
 			ArrayList<Double> scan = new ArrayList<Double>();
 			ArrayList<Double> sinapse = new ArrayList<Double>();
@@ -124,4 +129,20 @@ public class mainController implements Initializable{
 
 		}
 	}
+	@FXML
+	void usuarioDireita() {
+		controller.moveRight(this.car.get(0));
+	}
+	@FXML
+	void usuarioEsquerda() {
+		controller.moveLeft(this.car.get(0));
+		}
+	@FXML
+	void usuarioCima() {
+		controller.moveUp(this.car.get(0));
+		}
+	@FXML
+	void usuarioBaixo() {
+		controller.moveDown(this.car.get(0));
+		}
 }

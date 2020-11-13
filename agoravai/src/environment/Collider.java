@@ -19,7 +19,9 @@ public class Collider {
         Integer blue = c.getBlue();
         Integer red = c.getRed();
         Integer green = c.getGreen();
-        
+        if((blue + red + green) < 20) {
+        	car.Kill();
+        }
         return (blue + red + green) < 20 ? true : false;
 	}
 }

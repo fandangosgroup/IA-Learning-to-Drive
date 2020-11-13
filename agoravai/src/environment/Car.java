@@ -1,6 +1,9 @@
 package environment;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
@@ -9,36 +12,38 @@ import javafx.scene.paint.Color;
 
 public class Car{
 	
-	private int genesNumber = 160;
-	private ArrayList<Integer> genome =  new ArrayList<Integer>();
+	private int genesNumber = 128;
+	private ArrayList<Double> genome =  new ArrayList<Double>();
 	//private Color color;
 	private boolean isDead;
-	private int chanceMutation;
-	private int severyMutation;
-	private int chanceExtremeMutation;
+	private int chanceMutation = 50;
+	private Double severyMutation = 0.08d;
+	private int chanceExtremeMutation = 1;
 	private ImageView car;
+	private int ponto;
 	
 	public Car(int i) {
 		this.isDead = false;
 		this.setImageView(i);
-		this.setRandomGenome();
-		//this.setPresetGenes();
+		//this.setRandomGenome();
+		this.setPresetGenes();
+		this.mutation();
 	}
 	
 	public void mutation() {
 		for(int i = 0; i < this.genome.size(); i++) {
 			if(this.chanceMutation >= (int)(Math.random() * 100)) {
 				this.genome.set(i, this.genome.get(i) * this.severyMutation);
-				if(this.chanceExtremeMutation >= (int)(Math.random() * 100)) {
-					this.genome.set(i, this.extremeMutation(this.genome.get(i)));
-				}
+//				if(this.chanceExtremeMutation >= (int)(Math.random() * 100)) {
+//					this.genome.set(i, this.extremeMutation(this.genome.get(i)));
+//				}
 			}
 			
 		}
 		
 	}
 	
-	private int extremeMutation(int genes) {
+	private double extremeMutation(double genes) {
 		return genes * -1;
 	}
 	
@@ -56,28 +61,46 @@ public class Car{
          car = new ImageView(img);
          car.setFitHeight(5);
          car.setFitWidth(5);
-         car.setLayoutX(30);
+         car.setLayoutX(150);
          car.setLayoutY(35);
          car.setId(i.toString());
 	}
 	
 	private void setRandomGenome() {
 		for(int i = 0; i < this.genesNumber; i++) {
-			this.genome.add((int) (1000d - Math.random() * 1000d) );
+			this.genome.add((1000d - Math.random() * 1000d) );
 		}
 		//System.out.println(this.genome);
 	}
 	
 	private void setPresetGenes() {
-		//load no arquivo de genes
+		File genes = new File("genes");
+		try {
+            if (genes.exists()) {
+               ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(genes));
+               this.genome = (ArrayList<Double>) objInput.readObject();
+               objInput.close();
+
+           }
+         } catch(IOException erro1) {
+              System.out.printf("Erro: %s", erro1.getMessage());
+         } catch(ClassNotFoundException erro2) {
+              System.out.printf("Erro: %s", erro2.getMessage());
+         }
 	}
 	
 	public ImageView getImageView() {
 		return this.car;
 	}
 	
-	public ArrayList<Integer> getGenome(){
+	public ArrayList<Double> getGenome(){
 		return this.genome;
+	}
+	public void setPonto(int ponto) {
+		this.ponto = ponto;
+	}
+	public int getPonto() {
+		return this.ponto;
 	}
 	
 }

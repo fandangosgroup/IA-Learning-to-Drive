@@ -5,8 +5,12 @@
 
 <AnchorPane fx:id="game" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainController">
    <children>
-      <AnchorPane layoutX="-42.0" layoutY="-85.0" prefHeight="352.0" prefWidth="370.0">
-
-      </AnchorPane>
+      <AnchorPane layoutX="-35.0" layoutY="-85.0" prefHeight="352.0" prefWidth="370.0">
+         <children>
+            <Button layoutX="282.0" layoutY="151.0" mnemonicParsing="false" text="CIMA" onAction="#usuarioCima"/>
+            <Button layoutX="230.0" layoutY="182.0" mnemonicParsing="false" text="ESQUERDA" onAction="#usuarioEsquerda"/>
+            <Button layoutX="334.0" layoutY="182.0" mnemonicParsing="false" text="DIREITA" onAction="#usuarioDireita"/>
+            <Button layoutX="282.0" layoutY="207.0" mnemonicParsing="false" text="BAIXO" onAction="#usuarioBaixo"/>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

@@ -2,6 +2,10 @@ package environment;
 
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import db.UserDatabase;
 import javafx.scene.image.ImageView;
@@ -14,6 +18,13 @@ public class DrawTrack {
 	
 	public DrawTrack(Integer userId) {
 		track = UserDatabase.getImageTrack(userId);
+//		File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\pista.png");
+//		try {
+//			track = ImageIO.read(file);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		this.setImageView();
 	}
 	

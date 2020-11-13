@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import environment.Car;
 //Projetado para rodar com a imagem 500/500 caso mudar a dimensão da imagem deve alterar o tamanho da matriz para os numeros correspondentes
 import environment.DrawTrack;
 import javafx.scene.image.Image;
@@ -58,62 +59,62 @@ public class HeatDispersion {
 			this.x.add(x);
 			this.y.add(y);
 			this.n.add(n);
-			//this.drawHeat(x, y, game);
+			//this.drawHeat(x, y, game, n);
 		}
 		if((y - 1) > 0 && this.pointerMatrix[y - 1][x] == 0 && this.pixelVeify((y - 1), x, this.track).equals(true)) {
 			this.pointerMatrix[y - 1][x] = n;
 			this.x.add(x);
 			this.y.add((y - 1));
 			this.n.add(n);
-			//this.drawHeat(x, y - 1, game);
+			//this.drawHeat(x, y - 1, game, n);
 		}
 		if((y - 1) > 0 && (x - 1) > 0 && this.pointerMatrix[y - 1][x - 1] == 0 && this.pixelVeify(y - 1, x - 1, this.track).equals(true))
 			this.pointerMatrix[y - 1][x - 1] = n;
 			this.x.add((x - 1));
 			this.y.add((y - 1));
 			this.n.add(n);
-			//this.drawHeat(x - 1, y - 1, game);
+			//this.drawHeat(x - 1, y - 1, game, n);
 		if((x - 1) > 0  && this.pointerMatrix[y][x - 1] == 0 && this.pixelVeify(y, x - 1, this.track).equals(true)) {
 			this.pointerMatrix[y][x - 1] = n;
 			this.x.add(x - 1);
 			this.y.add(y);
 			this.n.add(n);
-			//this.drawHeat(x - 1, y, game);
+			//this.drawHeat(x - 1, y, game, n);
 		}
 		if((y + 1) < this.pointerMatrix.length && (x - 1) > 0  && this.pointerMatrix[y + 1][x - 1] == 0 && this.pixelVeify(y + 1, x - 1, this.track).equals(true)) {
 			this.pointerMatrix[y + 1][x - 1] = n;
 			this.x.add((x - 1));
 			this.y.add((y + 1));
 			this.n.add(n);
-			//this.drawHeat( x - 1, y + 1, game);
+			//this.drawHeat( x - 1, y + 1, game, n);
 		}
 		if((y + 1) < this.pointerMatrix.length && x < this.pointerMatrix.length  && this.pointerMatrix[y + 1][x] == 0 && this.pixelVeify(y + 1, x, this.track).equals(true)) {
 			this.pointerMatrix[y + 1][x] = n;
 			this.x.add(x);
 			this.y.add((y + 1));
 			this.n.add(n);
-			//this.drawHeat(x, y + 1,  game);
+			//this.drawHeat(x, y + 1,  game, n);
 		}
 		if((y + 1) < this.pointerMatrix.length && (x + 1) < this.pointerMatrix.length  && this.pointerMatrix[y + 1][x + 1] == 0 && this.pixelVeify(y + 1, x + 1, this.track).equals(true)) {
 			this.pointerMatrix[y + 1][x + 1] = n;
 			this.x.add((x + 1));
 			this.y.add((y + 1));
 			this.n.add(n);
-			//this.drawHeat(x + 1, y + 1,  game);
+			//this.drawHeat(x + 1, y + 1,  game, n);
 		}
 		if((x + 1) < this.pointerMatrix.length && y < this.pointerMatrix.length  && this.pointerMatrix[y][x + 1] == 0 && this.pixelVeify(y, x + 1, this.track).equals(true)) {
 			this.pointerMatrix[y][x + 1] = n;
 			this.x.add((x + 1));
 			this.y.add(y);
 			this.n.add(n);
-			//this.drawHeat(x + 1, y, game);
+			//this.drawHeat(x + 1, y, game, n);
 		}
 		if((y - 1) >= 0 && (x + 1) < this.pointerMatrix.length  && this.pointerMatrix[y - 1][x + 1] == 0 && this.pixelVeify(y - 1, x + 1, this.track).equals(true)) {
 			this.pointerMatrix[y + 1][x + 1] = n;
 			this.x.add((x + 1));
 			this.y.add((y + 1));
 			this.n.add(n);
-			//this.drawHeat(x + 1, y - 1, game);
+			//this.drawHeat(x + 1, y - 1, game, n);
 		}
 	}
 	
@@ -128,14 +129,52 @@ public class HeatDispersion {
         return (blue + red + green) > 20 ? true : false;
 	}
 	
-	public void drawHeat(int y, int x, AnchorPane game) {
+	public void drawHeat(int y, int x, AnchorPane game, int n) {
 		//this.game.getChildren().remove(3, this.game.getChildren().size());
+			if(n <= 10) {
 			File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\sensor.png");
 	        Image img = new javafx.scene.image.Image(file.toURI().toString());
 	        ImageView imgv = new ImageView(img);
 	        imgv.setLayoutX(x);
 	        imgv.setLayoutY(y);
-	        game.getChildren().add(imgv);	
+	        game.getChildren().add(imgv);
+	        }
+			if(n <= 13 && n > 10) {
+				File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\red.png");
+		        Image img = new javafx.scene.image.Image(file.toURI().toString());
+		        ImageView imgv = new ImageView(img);
+		        imgv.setLayoutX(x);
+		        imgv.setLayoutY(y);
+		        game.getChildren().add(imgv);
+		        }
+			if(n == 14) {
+				File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\laranja.png");
+		        Image img = new javafx.scene.image.Image(file.toURI().toString());
+		        ImageView imgv = new ImageView(img);
+		        imgv.setLayoutX(x);
+		        imgv.setLayoutY(y);
+		        game.getChildren().add(imgv);
+		        }
+			if(n == 15) {
+				File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\azul.png");
+		        Image img = new javafx.scene.image.Image(file.toURI().toString());
+		        ImageView imgv = new ImageView(img);
+		        imgv.setLayoutX(x);
+		        imgv.setLayoutY(y);
+		        game.getChildren().add(imgv);
+		        }
+			if(n >= 16) {
+				File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\outroAzul.png");
+		        Image img = new javafx.scene.image.Image(file.toURI().toString());
+		        ImageView imgv = new ImageView(img);
+		        imgv.setLayoutX(x);
+		        imgv.setLayoutY(y);
+		        game.getChildren().add(imgv);
+		        }
 		}
-		
+	public void getCarPointer(ArrayList<Car> car) {
+		for(int i = 0; i < car.size(); i++) {
+			car.get(i).setPonto(this.pointerMatrix[(int)car.get(i).getImageView().getLayoutX()][(int)car.get(i).getImageView().getLayoutY()]);
+		}
 	}
+}
