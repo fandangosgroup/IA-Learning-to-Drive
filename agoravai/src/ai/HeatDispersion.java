@@ -33,11 +33,17 @@ public class HeatDispersion {
 	}
 	public void setPointerMatrix(DrawTrack track, AnchorPane game) {
 		int n = 2;
+		int c = 0;
 		this.pintaPixel(499, 499, game, n);
 		n++;
 		for (int i = 0; i < this.x.size(); i++) {
 			if(this.x.get(i) > 0 && this.y.get(i) > 0) {
-				n = this.n.get(i) + 1;
+				if(++c == 16) {
+					c= 0;
+					n = this.n.get(i) + 1;	
+				}else {
+					n = this.n.get(i);
+				}
 				this.pintaPixel(this.x.get(i), this.y.get(i), game, n);
 				this.x.remove(i);
 				this.y.remove(i);
@@ -59,62 +65,62 @@ public class HeatDispersion {
 			this.x.add(x);
 			this.y.add(y);
 			this.n.add(n);
-			//this.drawHeat(x, y, game, n);
+			this.drawHeat(x, y, game, n);
 		}
 		if((y - 1) > 0 && this.pointerMatrix[y - 1][x] == 0 && this.pixelVeify((y - 1), x, this.track).equals(true)) {
 			this.pointerMatrix[y - 1][x] = n;
 			this.x.add(x);
 			this.y.add((y - 1));
 			this.n.add(n);
-			//this.drawHeat(x, y - 1, game, n);
+			this.drawHeat(x, y - 1, game, n);
 		}
 		if((y - 1) > 0 && (x - 1) > 0 && this.pointerMatrix[y - 1][x - 1] == 0 && this.pixelVeify(y - 1, x - 1, this.track).equals(true))
 			this.pointerMatrix[y - 1][x - 1] = n;
 			this.x.add((x - 1));
 			this.y.add((y - 1));
 			this.n.add(n);
-			//this.drawHeat(x - 1, y - 1, game, n);
+			this.drawHeat(x - 1, y - 1, game, n);
 		if((x - 1) > 0  && this.pointerMatrix[y][x - 1] == 0 && this.pixelVeify(y, x - 1, this.track).equals(true)) {
 			this.pointerMatrix[y][x - 1] = n;
 			this.x.add(x - 1);
 			this.y.add(y);
 			this.n.add(n);
-			//this.drawHeat(x - 1, y, game, n);
+			this.drawHeat(x - 1, y, game, n);
 		}
 		if((y + 1) < this.pointerMatrix.length && (x - 1) > 0  && this.pointerMatrix[y + 1][x - 1] == 0 && this.pixelVeify(y + 1, x - 1, this.track).equals(true)) {
 			this.pointerMatrix[y + 1][x - 1] = n;
 			this.x.add((x - 1));
 			this.y.add((y + 1));
 			this.n.add(n);
-			//this.drawHeat( x - 1, y + 1, game, n);
+			this.drawHeat( x - 1, y + 1, game, n);
 		}
 		if((y + 1) < this.pointerMatrix.length && x < this.pointerMatrix.length  && this.pointerMatrix[y + 1][x] == 0 && this.pixelVeify(y + 1, x, this.track).equals(true)) {
 			this.pointerMatrix[y + 1][x] = n;
 			this.x.add(x);
 			this.y.add((y + 1));
 			this.n.add(n);
-			//this.drawHeat(x, y + 1,  game, n);
+			this.drawHeat(x, y + 1,  game, n);
 		}
 		if((y + 1) < this.pointerMatrix.length && (x + 1) < this.pointerMatrix.length  && this.pointerMatrix[y + 1][x + 1] == 0 && this.pixelVeify(y + 1, x + 1, this.track).equals(true)) {
 			this.pointerMatrix[y + 1][x + 1] = n;
 			this.x.add((x + 1));
 			this.y.add((y + 1));
 			this.n.add(n);
-			//this.drawHeat(x + 1, y + 1,  game, n);
+			this.drawHeat(x + 1, y + 1,  game, n);
 		}
 		if((x + 1) < this.pointerMatrix.length && y < this.pointerMatrix.length  && this.pointerMatrix[y][x + 1] == 0 && this.pixelVeify(y, x + 1, this.track).equals(true)) {
 			this.pointerMatrix[y][x + 1] = n;
 			this.x.add((x + 1));
 			this.y.add(y);
 			this.n.add(n);
-			//this.drawHeat(x + 1, y, game, n);
+			this.drawHeat(x + 1, y, game, n);
 		}
 		if((y - 1) >= 0 && (x + 1) < this.pointerMatrix.length  && this.pointerMatrix[y - 1][x + 1] == 0 && this.pixelVeify(y - 1, x + 1, this.track).equals(true)) {
 			this.pointerMatrix[y + 1][x + 1] = n;
 			this.x.add((x + 1));
 			this.y.add((y + 1));
 			this.n.add(n);
-			//this.drawHeat(x + 1, y - 1, game, n);
+			this.drawHeat(x + 1, y - 1, game, n);
 		}
 	}
 	
@@ -131,7 +137,7 @@ public class HeatDispersion {
 	
 	public void drawHeat(int y, int x, AnchorPane game, int n) {
 		//this.game.getChildren().remove(3, this.game.getChildren().size());
-			if(n <= 10) {
+			if(n <= 2) {
 			File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\sensor.png");
 	        Image img = new javafx.scene.image.Image(file.toURI().toString());
 	        ImageView imgv = new ImageView(img);
@@ -139,7 +145,7 @@ public class HeatDispersion {
 	        imgv.setLayoutY(y);
 	        game.getChildren().add(imgv);
 	        }
-			if(n <= 13 && n > 10) {
+			if(n == 3) {
 				File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\red.png");
 		        Image img = new javafx.scene.image.Image(file.toURI().toString());
 		        ImageView imgv = new ImageView(img);
@@ -147,7 +153,7 @@ public class HeatDispersion {
 		        imgv.setLayoutY(y);
 		        game.getChildren().add(imgv);
 		        }
-			if(n == 14) {
+			if(n == 4) {
 				File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\laranja.png");
 		        Image img = new javafx.scene.image.Image(file.toURI().toString());
 		        ImageView imgv = new ImageView(img);
@@ -155,7 +161,7 @@ public class HeatDispersion {
 		        imgv.setLayoutY(y);
 		        game.getChildren().add(imgv);
 		        }
-			if(n == 15) {
+			if(n == 5) {
 				File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\azul.png");
 		        Image img = new javafx.scene.image.Image(file.toURI().toString());
 		        ImageView imgv = new ImageView(img);
@@ -163,7 +169,7 @@ public class HeatDispersion {
 		        imgv.setLayoutY(y);
 		        game.getChildren().add(imgv);
 		        }
-			if(n >= 16) {
+			if(n > 5) {
 				File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\outroAzul.png");
 		        Image img = new javafx.scene.image.Image(file.toURI().toString());
 		        ImageView imgv = new ImageView(img);

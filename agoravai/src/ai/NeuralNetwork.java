@@ -25,9 +25,9 @@ public class NeuralNetwork {
 		ArrayList<Double> outputNeuralNet = new ArrayList<Double>();
 		
 		firstHiddenLayer = this.getNeuronLayer(input, 8, 0, 1000000); 
-		//secondHiddenLayer = this.getNeuronLayer(firstHiddenLayer, 16, 8, 10000);
-		outputNeuralNet = this.getNeuronLayer(firstHiddenLayer, 12, 8, 10000);
-		
+		secondHiddenLayer = this.getNeuronLayer(firstHiddenLayer, 16, 8, 5000);
+		outputNeuralNet = this.getNeuronLayer(firstHiddenLayer, 20, 16, 1500);
+
 		this.w = 0;
 		
 		return outputNeuralNet;

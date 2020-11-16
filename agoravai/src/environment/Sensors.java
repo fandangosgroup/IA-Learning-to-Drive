@@ -16,8 +16,8 @@ public class Sensors {
 	private int positionY;
 	private AnchorPane game;
 	private Boolean mostraSensor = false;
-	private Integer sensorNormalRange = 80;
-	private Integer sensorDiagonalRange = 65;
+	private Integer sensorNormalRange = 400;
+	private Integer sensorDiagonalRange = 400;
 	
 	public Sensors(BufferedImage t, AnchorPane game){
 		this.track = t;
@@ -158,7 +158,7 @@ public class Sensors {
 	}
 	
 	public void drawSensor(int x, int y) {
-		//this.game.getChildren().remove(3, this.game.getChildren().size());
+		//this.game.getChildren().remove(5, this.game.getChildren().size());
 		
 		if(this.mostraSensor.equals(true)) {
 			File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\sensor.png");

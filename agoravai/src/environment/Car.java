@@ -12,15 +12,15 @@ import javafx.scene.paint.Color;
 
 public class Car{
 	
-	private int genesNumber = 128;
+	private int genesNumber = 180;
 	private ArrayList<Double> genome =  new ArrayList<Double>();
-	//private Color color;
 	private boolean isDead;
-	private int chanceMutation = 90;
-	private Double severyMutation = 0.09d;
+	private int chanceMutation = 1;
+	private Double severyMutation = 0.01d;
 	private int chanceExtremeMutation = 1;
 	private ImageView car;
-	private int ponto;
+	private long ponto;
+	private boolean keepBestCar = true;
 	
 	public Car(int i) {
 		this.isDead = false;
@@ -30,20 +30,22 @@ public class Car{
 		
 		if(genes.exists()) {
 			this.setPresetGenes();
-			this.mutation();
-		}else {
+			if(i > 0) {
+				this.mutation();		
+			}
+		}else{
 			this.setRandomGenome();
+			this.mutation();
 		}
-		
 	}
 	
 	public void mutation() {
 		for(int i = 0; i < this.genome.size(); i++) {
 			if(this.chanceMutation >= (int)(Math.random() * 100)) {
 				this.genome.set(i, this.genome.get(i) * this.severyMutation);
-//				if(this.chanceExtremeMutation >= (int)(Math.random() * 100)) {
-//					this.genome.set(i, this.extremeMutation(this.genome.get(i)));
-//				}
+				if(this.chanceExtremeMutation <= (int)(Math.random() * 100)) {
+					this.genome.set(i, this.extremeMutation(this.genome.get(i)));
+				}
 			}
 			
 		}
@@ -68,7 +70,7 @@ public class Car{
          car = new ImageView(img);
          car.setFitHeight(5);
          car.setFitWidth(5);
-         car.setLayoutX(150);
+         car.setLayoutX(80);
          car.setLayoutY(35);
          car.setId(i.toString());
 	}
@@ -103,10 +105,10 @@ public class Car{
 	public ArrayList<Double> getGenome(){
 		return this.genome;
 	}
-	public void setPonto(int ponto) {
-		this.ponto = ponto;
+	public void setPonto(long matrix) {
+		this.ponto = matrix;
 	}
-	public int getPonto() {
+	public long getPonto() {
 		return this.ponto;
 	}
 	

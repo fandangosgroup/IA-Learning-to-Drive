@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import ai.EvolutionAlgorithm;
 import ai.HeatDispersion;
 import ai.NeuralNetwork;
+import ai.WaveFront;
 import db.UserDatabase;
 import environment.Car;
 import environment.Collider;
@@ -41,10 +42,10 @@ public class mainController implements Initializable{
 	private ArrayList<Car> car;
 	private Collider collider;
 	private NeuralNetwork nn;
-	private HeatDispersion hd;
+	private WaveFront wf;
 	private EvolutionAlgorithm ea;
 	private Timeline tl;
-	private int carnumber = 1000;
+	private int carnumber = 500;
 
 	private int gambi = 0;
 	
@@ -54,7 +55,12 @@ public class mainController implements Initializable{
 		startGame();
 	
 	}
-	
+	public void restartGame() {
+		
+		this.car = ea.getGeneration();
+		tl.play();
+		
+	}
 	public void startGame() {
 		ea = new EvolutionAlgorithm(carnumber, 1, 900, game);
 		this.car = ea.getGeneration();
@@ -65,14 +71,12 @@ public class mainController implements Initializable{
 		this.track = new DrawTrack(UserDatabase.getId() - 1);
 		this.setTrack();
 		collider = new Collider(this.track);
-		
+		wf = new WaveFront(game, track);
 		controller = new Controller();
 		this.sensor = new Sensors(this.track.getTrack(), this.game);
-		hd = new HeatDispersion(this.track, this.game);
-		this.hd.setPointerMatrix(track, game);	
-		
+		wf.setMatrix();
 		this.tl = new Timeline(
-		new KeyFrame(Duration.millis(10), e -> this.pensa())
+		new KeyFrame(Duration.millis(5), e -> this.pensa())
         );
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
@@ -104,7 +108,7 @@ public class mainController implements Initializable{
 	void pensa() {
 		this.timer++;
 		if(this.timer >= this.ea.getTimeGeneration()) {
-			this.hd.getCarPointer(car);
+			this.wf.getCarPointer(car);
 			this.ea.artifialSelection(car, track);
 			try {
 				reset();
@@ -118,7 +122,11 @@ public class mainController implements Initializable{
 			if(this.car.get(i).getIsDead().equals(false)) {
 				scan = sensor.scan((int)car.get(i).getImageView().getLayoutX(), (int)car.get(i).getImageView().getLayoutY());
 				sinapse = this.nn.getSinapse(scan, car.get(i));
-			
+				
+//				for (int j = 0; j < sinapse.size(); j++) {
+//					System.out.println(sinapse.get(j));
+//				}
+//				System.out.println("---------");
 				if(sinapse.get(0) > sinapse.get(1) && sinapse.get(0) > sinapse.get(2) && sinapse.get(0) > sinapse.get(3)) {
 					if(!this.collider.verify(this.car.get(i)))
 						this.cima(this.car.get(i));	
@@ -144,23 +152,30 @@ public class mainController implements Initializable{
 	@FXML
 	void usuarioDireita() {
 		controller.moveRight(this.car.get(0));
+		this.wf.getCarPointer(this.car);
+		ea.artifialSelection(this.car, this.track);
 	}
 	@FXML
 	void usuarioEsquerda() {
 		controller.moveLeft(this.car.get(0));
+		this.wf.getCarPointer(this.car);
+		ea.artifialSelection(this.car, this.track);
 		}
 	@FXML
 	void usuarioCima() {
 		controller.moveUp(this.car.get(0));
+		this.wf.getCarPointer(this.car);
+		ea.artifialSelection(this.car, this.track);
 		}
 	@FXML
 	void usuarioBaixo() {
 		controller.moveDown(this.car.get(0));
+		this.wf.getCarPointer(this.car);
+		ea.artifialSelection(this.car, this.track);
 		}
 	@FXML
 	void reset() throws Throwable {
 		tl.stop();
-		finalize();
 		
 		final Button restartButton = new Button( "Restart" );
 		restartButton.setLayoutX(434);
@@ -208,7 +223,7 @@ public class mainController implements Initializable{
 		RightButton.setOnAction(e -> {usuarioDireita();});
 		
 		this.game.getChildren().clear();
-		
+		this.game.getChildren().add(this.track.getImgTrack());
 		this.game.getChildren().add(restartButton);
 		this.game.getChildren().add(StopButton);
 		this.game.getChildren().add(UpButton);
@@ -218,16 +233,8 @@ public class mainController implements Initializable{
 		this.game.getChildren().add(IaRemoveButton);
 		
 		this.timer = 0;
-		this.sensor = null;
-		this.track = null; 
-		this.controller = null;
 		this.car = null;
-		this.collider = null;
-		this.nn = null;
-		this.hd = null;
-		this. ea = null;
-		this.tl = null;
-		startGame();
+		restartGame();
 	}
 	@FXML
 	void stop() {
