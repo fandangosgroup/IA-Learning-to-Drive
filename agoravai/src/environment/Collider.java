@@ -19,7 +19,7 @@ public class Collider {
 		int xEsquerda = (int) car.getImageView().getLayoutX() - 5;
 		int yEsquerda = (int) car.getImageView().getLayoutY();
 		int xBaixo = (int) car.getImageView().getLayoutX();
-		int yBaixo = (int) car.getImageView().getLayoutY() + 5;
+		int yBaixo = (int) car.getImageView().getLayoutY() - 5;
         
 		if(this.rgbVerify(xDireita, yDireita, car))
 			retval = true;

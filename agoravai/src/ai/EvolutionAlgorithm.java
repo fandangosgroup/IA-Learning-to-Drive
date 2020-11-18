@@ -38,8 +38,13 @@ public class EvolutionAlgorithm {
 	}
 	
 	public void artifialSelection(ArrayList<Car> car, DrawTrack track) {
-		long min = 100000;
+		long min = 1000000;
 		int carIndex = 0;
+		for(int i = 0; i < car.size(); i++) {
+			if(car.get(i).getIsDead().equals(true)) {
+				car.get(i).setPonto(car.get(i).getPonto() + 3);
+			}
+		}
 		for(int i = 0; i < car.size(); i++) {
 			if(min > car.get(i).getPonto() && car.get(i).getPonto() > 0) {
 				min = car.get(i).getPonto();
@@ -65,9 +70,7 @@ public class EvolutionAlgorithm {
 	}
 	//salva os melhores genes
 	private void saveGenesState(Car car, double fitness) {
-		new Thread() {
-			@Override
-			public void run() {
+
 				File genes = new File("genes");
 				File score = new File("score");
 				
@@ -88,8 +91,7 @@ public class EvolutionAlgorithm {
 		         }
 				
 				System.out.println("Pontuação do arquivo: "+oldFitness);
-				if(oldFitness > fitness) {
-					System.out.println("É MELHOR VOU SALVAR !!");
+				System.out.println("É MELHOR VOU SALVAR !!");
 					try {
 						
 				         genes.delete();
@@ -109,9 +111,7 @@ public class EvolutionAlgorithm {
 				       } catch(IOException erro) {
 				           System.out.printf("Erro: %s", erro.getMessage());
 				       }
-				}
-			}
-		}.start();
+
 		
 		
 		//System.exit(0);

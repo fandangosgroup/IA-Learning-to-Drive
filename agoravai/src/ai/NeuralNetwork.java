@@ -24,7 +24,12 @@ public class NeuralNetwork {
 		ArrayList<Double> secondHiddenLayer = new ArrayList<Double>();
 		ArrayList<Double> outputNeuralNet = new ArrayList<Double>();
 		
-		firstHiddenLayer = this.getNeuronLayer(input, 8, 0, 1000000); 
+		firstHiddenLayer = this.getNeuronLayer(input, 8, 0, 1000000);
+//		firstHiddenLayer.forEach(
+//				fhl->System.out.println("layer: " + fhl)
+//				);
+//		
+//		System.exit(0);
 		secondHiddenLayer = this.getNeuronLayer(firstHiddenLayer, 16, 8, 5000);
 		outputNeuralNet = this.getNeuronLayer(firstHiddenLayer, 20, 16, 1500);
 
@@ -53,7 +58,10 @@ public class NeuralNetwork {
 		int j = 0;
 		while(startNeuron < numberOfNeuron) {
 			while(j < input.size()) {
-				we.add(j, (((this.car.getGenome().get(this.w) * input.get(j)) / n)));
+				we.add(j, (((this.car.getGenome().get(this.w) * input.get(j) / n))));
+//				System.out.println("genes: " + this.car.getGenome().get(this.w));
+//				System.out.println("sensor: " + input.get(j));
+//				System.out.println(we.get(j));
 				j++;
 				this.w++;
 			}

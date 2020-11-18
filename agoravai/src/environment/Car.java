@@ -15,9 +15,9 @@ public class Car{
 	private int genesNumber = 180;
 	private ArrayList<Double> genome =  new ArrayList<Double>();
 	private boolean isDead;
-	private int chanceMutation = 1;
-	private Double severyMutation = 0.01d;
-	private int chanceExtremeMutation = 1;
+	private double chanceMutation = 98d;
+	private double severyMutation = 0.99d;
+	private double chanceExtremeMutation = 1d;
 	private ImageView car;
 	private long ponto;
 	private boolean keepBestCar = true;
@@ -30,9 +30,7 @@ public class Car{
 		
 		if(genes.exists()) {
 			this.setPresetGenes();
-			if(i > 0) {
-				this.mutation();		
-			}
+			this.mutation();	
 		}else{
 			this.setRandomGenome();
 			this.mutation();
@@ -41,7 +39,7 @@ public class Car{
 	
 	public void mutation() {
 		for(int i = 0; i < this.genome.size(); i++) {
-			if(this.chanceMutation >= (int)(Math.random() * 100)) {
+			if(this.chanceMutation <= (int)(Math.random() * 100)) {
 				this.genome.set(i, this.genome.get(i) * this.severyMutation);
 				if(this.chanceExtremeMutation <= (int)(Math.random() * 100)) {
 					this.genome.set(i, this.extremeMutation(this.genome.get(i)));
@@ -68,6 +66,9 @@ public class Car{
 		 File file = new File("C:\\Repositorios\\IA-Learning-to-Drive\\agoravai\\media\\car.png");
          Image img = new Image(file.toURI().toString());
          car = new ImageView(img);
+
+        //car.setVisible(false);	 
+
          car.setFitHeight(5);
          car.setFitWidth(5);
          car.setLayoutX(80);

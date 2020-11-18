@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 import ai.EvolutionAlgorithm;
-import ai.HeatDispersion;
 import ai.NeuralNetwork;
 import ai.WaveFront;
 import db.UserDatabase;
@@ -45,7 +44,7 @@ public class mainController implements Initializable{
 	private WaveFront wf;
 	private EvolutionAlgorithm ea;
 	private Timeline tl;
-	private int carnumber = 500;
+	private int carnumber = 1000;
 
 	private int gambi = 0;
 	
@@ -62,7 +61,7 @@ public class mainController implements Initializable{
 		
 	}
 	public void startGame() {
-		ea = new EvolutionAlgorithm(carnumber, 1, 900, game);
+		ea = new EvolutionAlgorithm(carnumber, 1, 1200, game);
 		this.car = ea.getGeneration();
 		
 		
@@ -76,7 +75,7 @@ public class mainController implements Initializable{
 		this.sensor = new Sensors(this.track.getTrack(), this.game);
 		wf.setMatrix();
 		this.tl = new Timeline(
-		new KeyFrame(Duration.millis(5), e -> this.pensa())
+		new KeyFrame(Duration.millis(20), e -> this.pensa())
         );
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
@@ -127,6 +126,7 @@ public class mainController implements Initializable{
 //					System.out.println(sinapse.get(j));
 //				}
 //				System.out.println("---------");
+				
 				if(sinapse.get(0) > sinapse.get(1) && sinapse.get(0) > sinapse.get(2) && sinapse.get(0) > sinapse.get(3)) {
 					if(!this.collider.verify(this.car.get(i)))
 						this.cima(this.car.get(i));	
