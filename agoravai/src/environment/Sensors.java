@@ -18,6 +18,7 @@ public class Sensors {
 	private Boolean mostraSensor = false;
 	private Integer sensorNormalRange = 400;
 	private Integer sensorDiagonalRange = 400;
+	private int flagChegada = 0;
 	
 	public Sensors(BufferedImage t, AnchorPane game){
 		this.track = t;
@@ -28,6 +29,7 @@ public class Sensors {
 		ArrayList<Double> ret = new ArrayList<Double>();
 		this.positionX = x;
 		this.positionY = y;
+		this.flagChegada = 0;
 		ret.add(this.up());
 		ret.add(this.down());
 		ret.add(this.right());
@@ -50,7 +52,10 @@ public class Sensors {
 		
 		for (int y = this.positionY; y > this.positionY-this.sensorNormalRange && y > 0 ; y --){
             if(this.verificaRGB(this.positionX, y)){
-                return pixNumber;
+            	if(this.flagChegada > 0) {
+					return pixNumber + this.flagChegada;
+				}
+            	return pixNumber;
             }
             this.drawSensor(this.positionX, y);
             pixNumber++;
@@ -63,7 +68,10 @@ public class Sensors {
 
 		for (int y = this.positionY; y < this.positionY + this.sensorNormalRange ; y ++){
             if(this.verificaRGB(this.positionX, y)){
-                return pixNumber;
+            	if(this.flagChegada > 0) {
+					return pixNumber + this.flagChegada;
+				}
+            	return pixNumber;
             }
             this.drawSensor(this.positionX, y);
             pixNumber++;
@@ -77,7 +85,10 @@ public class Sensors {
 		
 		for (int x = this.positionX; x < this.positionX + this.sensorNormalRange ; x ++){
             if(this.verificaRGB(x, this.positionY)){
-                return pixNumber;
+            	if(this.flagChegada > 0) {
+					return pixNumber + this.flagChegada;
+				}
+            	return pixNumber;
             }
             this.drawSensor(x, this.positionY);
             pixNumber++;
@@ -91,7 +102,10 @@ public class Sensors {
 		
 		for (int x = this.positionX; x > this.positionX - this.sensorNormalRange ; x--){
             if(this.verificaRGB(x, this.positionY)){
-                return pixNumber;
+            	if(this.flagChegada > 0) {
+					return pixNumber + this.flagChegada;
+				}
+            	return pixNumber;
             }
             this.drawSensor(x, this.positionY);
             pixNumber++;
@@ -104,6 +118,9 @@ public class Sensors {
 		int y = this.positionY;
 		for (int x = this.positionX; x < this.positionX + this.sensorDiagonalRange; x++) {
 			if(this.verificaRGB(x, y) && y > 0) {
+				if(this.flagChegada > 0) {
+					return pixNumber + this.flagChegada;
+				}
 				return pixNumber;
 			}
 			this.drawSensor(x, y);
@@ -118,6 +135,9 @@ public class Sensors {
 		int y = this.positionY;
 		for (int x = this.positionX; x > this.positionX - this.sensorDiagonalRange; x--) {
 			if(this.verificaRGB(x, y) && y > 0) {
+				if(this.flagChegada > 0) {
+					return pixNumber + this.flagChegada;
+				}
 				return pixNumber;
 			}
 			this.drawSensor(x, y);
@@ -132,6 +152,9 @@ public class Sensors {
 		int x = this.positionX;
 		for (int y = this.positionY; y < this.positionY + this.sensorDiagonalRange; y++) {
 			if(this.verificaRGB(x, y)) {
+				if(this.flagChegada > 0) {
+					return pixNumber + this.flagChegada;
+				}
 				return pixNumber;
 			}
 			this.drawSensor(x, y);
@@ -147,6 +170,9 @@ public class Sensors {
 		int x = this.positionX;
 		for (int y = this.positionY; y < this.positionY + this.sensorDiagonalRange; y++) {
 			if(this.verificaRGB(x, y)) {
+				if(this.flagChegada > 0) {
+					return pixNumber + this.flagChegada;
+				}
 				return pixNumber;
 			}
 			this.drawSensor(x, y);
@@ -184,6 +210,10 @@ public class Sensors {
         red = c.getRed();
         green = c.getGreen();
         Integer tot = blue + red + green;
+        if(red > 200 && (blue + green) < 100 ) {
+        	this.flagChegada = 999;
+        	return true;
+        }
         
 		return tot < 20? true : false;
 	}

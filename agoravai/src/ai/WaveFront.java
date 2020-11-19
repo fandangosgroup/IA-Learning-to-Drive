@@ -115,7 +115,7 @@ public class WaveFront {
 	    Integer red = c.getRed();
 	    Integer green = c.getGreen();
 	    
-	    return (blue + red + green) > 20 ? true : false;
+	    return red > 200 ? true : false;
 	}
 	public void getCarPointer(ArrayList<Car> car) {
 		for(int i = 0; i < car.size(); i++) {

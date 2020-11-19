@@ -39,6 +39,9 @@ public class Collider {
         Integer blue = c.getBlue();
         Integer red = c.getRed();
         Integer green = c.getGreen();
+        if(red > 200 && (blue + green) < 100 ) {
+        	car.champion();;
+        }
         if((blue + red + green) < 20) {
         	car.Kill();
         }

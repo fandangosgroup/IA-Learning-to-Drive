@@ -44,7 +44,7 @@ public class mainController implements Initializable{
 	private WaveFront wf;
 	private EvolutionAlgorithm ea;
 	private Timeline tl;
-	private int carnumber = 1000;
+	private int carnumber = 100;
 
 	private int gambi = 0;
 	
@@ -61,7 +61,7 @@ public class mainController implements Initializable{
 		
 	}
 	public void startGame() {
-		ea = new EvolutionAlgorithm(carnumber, 1, 1200, game);
+		ea = new EvolutionAlgorithm(carnumber, 1, 900, game);
 		this.car = ea.getGeneration();
 		
 		
@@ -75,7 +75,7 @@ public class mainController implements Initializable{
 		this.sensor = new Sensors(this.track.getTrack(), this.game);
 		wf.setMatrix();
 		this.tl = new Timeline(
-		new KeyFrame(Duration.millis(20), e -> this.pensa())
+		new KeyFrame(Duration.millis(10), e -> this.pensa())
         );
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
@@ -107,15 +107,12 @@ public class mainController implements Initializable{
 	void pensa() {
 		this.timer++;
 		if(this.timer >= this.ea.getTimeGeneration()) {
-			this.wf.getCarPointer(car);
-			this.ea.artifialSelection(car, track);
-			try {
-				reset();
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
+			terminaGeracao();
 		}
 		for(int i =0; i < this.car.size(); i++) {
+			if(this.car.get(i).isChampion()) {
+				terminaGeracao();
+			}
 			ArrayList<Double> scan = new ArrayList<Double>();
 			ArrayList<Double> sinapse = new ArrayList<Double>();
 			if(this.car.get(i).getIsDead().equals(false)) {
@@ -152,26 +149,30 @@ public class mainController implements Initializable{
 	@FXML
 	void usuarioDireita() {
 		controller.moveRight(this.car.get(0));
-		this.wf.getCarPointer(this.car);
-		ea.artifialSelection(this.car, this.track);
+		//this.wf.getCarPointer(this.car);
+		//ea.artifialSelection(this.car, this.track);
+		sensor.scan((int) this.car.get(0).getImageView().getLayoutX(), (int)car.get(0).getImageView().getLayoutY());
 	}
 	@FXML
 	void usuarioEsquerda() {
 		controller.moveLeft(this.car.get(0));
-		this.wf.getCarPointer(this.car);
-		ea.artifialSelection(this.car, this.track);
+		//this.wf.getCarPointer(this.car);
+		//ea.artifialSelection(this.car, this.track);
+		sensor.scan((int) this.car.get(0).getImageView().getLayoutX(), (int)car.get(0).getImageView().getLayoutY());
 		}
 	@FXML
 	void usuarioCima() {
 		controller.moveUp(this.car.get(0));
-		this.wf.getCarPointer(this.car);
-		ea.artifialSelection(this.car, this.track);
+		//this.wf.getCarPointer(this.car);
+		//ea.artifialSelection(this.car, this.track);
+		sensor.scan((int) this.car.get(0).getImageView().getLayoutX(), (int)car.get(0).getImageView().getLayoutY());
 		}
 	@FXML
 	void usuarioBaixo() {
 		controller.moveDown(this.car.get(0));
-		this.wf.getCarPointer(this.car);
-		ea.artifialSelection(this.car, this.track);
+		//this.wf.getCarPointer(this.car);
+		//ea.artifialSelection(this.car, this.track);
+		sensor.scan((int) this.car.get(0).getImageView().getLayoutX(), (int)car.get(0).getImageView().getLayoutY());
 		}
 	@FXML
 	void reset() throws Throwable {
@@ -239,5 +240,14 @@ public class mainController implements Initializable{
 	@FXML
 	void stop() {
 		System.exit(1);
+	}
+	public void terminaGeracao() {
+		this.wf.getCarPointer(car);
+		this.ea.artifialSelection(car, track);
+		try {
+			reset();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 }

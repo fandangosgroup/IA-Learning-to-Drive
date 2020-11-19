@@ -21,6 +21,7 @@ public class Car{
 	private ImageView car;
 	private long ponto;
 	private boolean keepBestCar = true;
+	private boolean isChampion = false;
 	
 	public Car(int i) {
 		this.isDead = false;
@@ -71,8 +72,8 @@ public class Car{
 
          car.setFitHeight(5);
          car.setFitWidth(5);
-         car.setLayoutX(80);
-         car.setLayoutY(35);
+         car.setLayoutX(50);
+         car.setLayoutY(50);
          car.setId(i.toString());
 	}
 	
@@ -111,6 +112,12 @@ public class Car{
 	}
 	public long getPonto() {
 		return this.ponto;
+	}
+	public void champion() {
+		this.isChampion  = true;
+	}
+	public boolean isChampion() {
+		return this.isChampion;
 	}
 	
 }
