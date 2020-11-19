@@ -44,9 +44,9 @@ public class mainController implements Initializable{
 	private WaveFront wf;
 	private EvolutionAlgorithm ea;
 	private Timeline tl;
-	private int carnumber = 100;
+	private int carnumber = 1;
 
-	private int gambi = 0;
+	private int gambi = 0; //se tirar quebra
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

@@ -31,6 +31,7 @@ public class Car{
 		
 		if(genes.exists()) {
 			this.setPresetGenes();
+			if(i > 0)
 			this.mutation();	
 		}else{
 			this.setRandomGenome();
