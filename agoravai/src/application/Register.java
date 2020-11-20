@@ -11,7 +11,12 @@ public class Register{
 	}
 	
 	public void register() {
-		UserDatabase userDb = new UserDatabase();
-		userDb.insert(this.user);
+		try {
+			UserDatabase userDb = new UserDatabase();
+			userDb.insert(this.user);
+		}catch (Exception e) {
+			System.out.println("Deu ruim!");
+		}
+		
 	}
 }
