@@ -1,12 +1,10 @@
 package application;
 	
-import db.UserDatabase;
+
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 public class Main extends Application {
@@ -17,7 +15,7 @@ public class Main extends Application {
 			//Register rg = new Register(user);
 			//rg.register();
 			AnchorPane root = FXMLLoader.load(getClass().getResource("main.fxml"));
-			Scene scene = new Scene(root,600,600);
+			Scene scene = new Scene(root,1200,800);
 			
 //			final Button restartButton = new Button( "Restart 2" );
 //			

@@ -12,12 +12,16 @@ import javafx.scene.paint.Color;
 
 public class Car{
 	
+	//Valores sagrados!
+	//98d
+	//0.99d
+	//1d
 	private int genesNumber = 180;
 	private ArrayList<Double> genome =  new ArrayList<Double>();
 	private boolean isDead;
-	private double chanceMutation = 98d;
-	private double severyMutation = 0.99d;
-	private double chanceExtremeMutation = 1d;
+	private double chanceMutation; 
+	private double severyMutation; 
+	private double chanceExtremeMutation;
 	private ImageView car;
 	private long ponto;
 	private boolean keepBestCar = true;
@@ -31,11 +35,13 @@ public class Car{
 		
 		if(genes.exists()) {
 			this.setPresetGenes();
-			if(i > 0)
-			this.mutation();	
+//			if(i > 0) {
+//				this.mutation();
+//			}
+//				
 		}else{
 			this.setRandomGenome();
-			this.mutation();
+			//this.mutation();
 		}
 	}
 	
@@ -120,5 +126,33 @@ public class Car{
 	public boolean isChampion() {
 		return this.isChampion;
 	}
+	
+	public double getChanceMutation() {
+		return chanceMutation;
+	}
+
+	public void setChanceMutation(Double chanceMutation) {
+		//System.out.println(chanceMutation);
+		this.chanceMutation = chanceMutation;
+	}
+
+	public double getSeveryMutation() {
+		return severyMutation;
+	}
+
+	public void setSeveryMutation(Double severyMutation) {
+		//System.out.println(severyMutation);
+		this.severyMutation = severyMutation;
+	}
+
+	public double getChanceExtremeMutation() {
+		return chanceExtremeMutation;
+	}
+
+	public void setChanceExtremeMutation(Double chanceExtremeMutation) {
+		//System.out.println(chanceExtremeMutation);
+		this.chanceExtremeMutation = chanceExtremeMutation;
+	}
+	
 	
 }

@@ -21,6 +21,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -34,6 +35,24 @@ public class mainController implements Initializable{
 	@FXML
 	private AnchorPane game;
 	
+	@FXML
+	private TextField carNumber;
+	
+	@FXML
+	private TextField timeGen;
+	
+	@FXML
+	private TextField velocity;
+	
+	@FXML
+	private TextField chanceMutation;
+	
+	@FXML
+	private TextField severyMutation;
+	
+	@FXML
+	private TextField chanceExtremeMutation;
+	
 	private int timer = 0;
 	private Sensors sensor;
 	private DrawTrack track; 
@@ -44,26 +63,35 @@ public class mainController implements Initializable{
 	private WaveFront wf;
 	private EvolutionAlgorithm ea;
 	private Timeline tl;
-	private int carnumber = 1;
 
 	private int gambi = 0; //se tirar quebra
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		startGame();
+		
 	
 	}
+	
 	public void restartGame() {
 		
-		this.car = ea.getGeneration();
+		this.car = ea.getGeneration(Double.parseDouble(this.chanceMutation.getText()), Double.parseDouble(this.chanceExtremeMutation.getText()), Double.parseDouble(this.severyMutation.getText()));
 		tl.play();
 		
 	}
+	
+	@FXML
 	public void startGame() {
-		ea = new EvolutionAlgorithm(carnumber, 1, 900, game);
-		this.car = ea.getGeneration();
-		
+		ea = new EvolutionAlgorithm(Integer.parseInt(this.carNumber.getText()), 1, Integer.parseInt(this.timeGen.getText()), game);
+		this.car = ea.getGeneration(Double.parseDouble(this.chanceMutation.getText()), Double.parseDouble(this.chanceExtremeMutation.getText()), Double.parseDouble(this.severyMutation.getText()));
+		System.out.println("Car number " +Integer.parseInt(this.carNumber.getText()) + 
+				"time gen "+Integer.parseInt(this.timeGen.getText()) +
+				"chance mutation " + Double.parseDouble(this.chanceMutation.getText())
+				+ "chance extreme " + Double.parseDouble(this.chanceExtremeMutation.getText())
+				+ "severy " + Double.parseDouble(this.severyMutation.getText()));
+		//for(Car x : this.car)  {
+			//System.out.println(x.getGenome().toString());
+	//	}
 		
 		//System.out.println(game.getChildren().toString());
 		this.nn = new NeuralNetwork();
@@ -75,7 +103,7 @@ public class mainController implements Initializable{
 		this.sensor = new Sensors(this.track.getTrack(), this.game);
 		wf.setMatrix();
 		this.tl = new Timeline(
-		new KeyFrame(Duration.millis(10), e -> this.pensa())
+				new KeyFrame(Duration.millis(Integer.parseInt(this.velocity.getText())), e -> this.pensa())
         );
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
@@ -146,6 +174,7 @@ public class mainController implements Initializable{
 
 		}
 	}
+	
 	@FXML
 	void usuarioDireita() {
 		controller.moveRight(this.car.get(0));
@@ -179,8 +208,8 @@ public class mainController implements Initializable{
 		tl.stop();
 		
 		final Button restartButton = new Button( "Restart" );
-		restartButton.setLayoutX(434);
-		restartButton.setLayoutY(277);
+		restartButton.setLayoutX(524);
+		restartButton.setLayoutY(9);
 		restartButton.setOnAction(e -> {
             try {
 				reset();
@@ -203,8 +232,8 @@ public class mainController implements Initializable{
         });
 		
 		final Button StopButton = new Button( "Stop" );
-		StopButton.setLayoutX(448);
-		StopButton.setLayoutY(2);
+		StopButton.setLayoutX(589);
+		StopButton.setLayoutY(9);
 		StopButton.setOnAction(e -> {stop();});
 		final Button UpButton = new Button( "CIMA" );
 		UpButton.setLayoutX(284);
@@ -227,11 +256,11 @@ public class mainController implements Initializable{
 		this.game.getChildren().add(this.track.getImgTrack());
 		this.game.getChildren().add(restartButton);
 		this.game.getChildren().add(StopButton);
-		this.game.getChildren().add(UpButton);
-		this.game.getChildren().add(DownButton);
-		this.game.getChildren().add(LeftButton);
-		this.game.getChildren().add(RightButton);
-		this.game.getChildren().add(IaRemoveButton);
+//		this.game.getChildren().add(UpButton);
+//		this.game.getChildren().add(DownButton);
+//		this.game.getChildren().add(LeftButton);
+//		this.game.getChildren().add(RightButton);
+//		this.game.getChildren().add(IaRemoveButton);
 		
 		this.timer = 0;
 		this.car = null;

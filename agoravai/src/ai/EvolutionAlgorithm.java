@@ -27,10 +27,14 @@ public class EvolutionAlgorithm {
 		this.game = game;
 	}	
 	
-	public ArrayList<Car> getGeneration(){
+	public ArrayList<Car> getGeneration(double chanceMutation, double extremeChanceMutation, double severyMutation){
 		ArrayList<Car> cars = new ArrayList<Car>();
 		for(int i = 0; i < individualsPerGeneration; i++) {
-			cars.add(new Car(i));
+			cars.add(i, new Car(i));
+			cars.get(i).setChanceMutation(chanceMutation);
+			cars.get(i).setChanceExtremeMutation(extremeChanceMutation);
+			cars.get(i).setSeveryMutation(severyMutation);
+			cars.get(i).mutation();
 			this.game.getChildren().add(cars.get(i).getImageView());
 		}
 		
