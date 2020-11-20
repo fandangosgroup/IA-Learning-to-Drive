@@ -53,6 +53,11 @@ public class mainController implements Initializable{
 	@FXML
 	private TextField chanceExtremeMutation;
 	
+	@FXML
+	private Button startButton;
+	@FXML
+	private Button resetButton;
+	
 	private int timer = 0;
 	private Sensors sensor;
 	private DrawTrack track; 
@@ -69,7 +74,6 @@ public class mainController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		
 	
 	}
 	
@@ -82,13 +86,17 @@ public class mainController implements Initializable{
 	
 	@FXML
 	public void startGame() {
-		ea = new EvolutionAlgorithm(Integer.parseInt(this.carNumber.getText()), 1, Integer.parseInt(this.timeGen.getText()), game);
+		carNumber.setDisable(true);
+		timeGen.setDisable(true);
+		velocity.setDisable(true);
+		chanceMutation.setDisable(true);
+		severyMutation.setDisable(true);
+		chanceExtremeMutation.setDisable(true);
+		startButton.setDisable(true);
+		
+		ea = new EvolutionAlgorithm(Integer.parseInt(this.carNumber.getText()), 1,( Integer.parseInt(this.timeGen.getText())), game);
 		this.car = ea.getGeneration(Double.parseDouble(this.chanceMutation.getText()), Double.parseDouble(this.chanceExtremeMutation.getText()), Double.parseDouble(this.severyMutation.getText()));
-		System.out.println("Car number " +Integer.parseInt(this.carNumber.getText()) + 
-				"time gen "+Integer.parseInt(this.timeGen.getText()) +
-				"chance mutation " + Double.parseDouble(this.chanceMutation.getText())
-				+ "chance extreme " + Double.parseDouble(this.chanceExtremeMutation.getText())
-				+ "severy " + Double.parseDouble(this.severyMutation.getText()));
+
 		//for(Car x : this.car)  {
 			//System.out.println(x.getGenome().toString());
 	//	}
@@ -231,7 +239,7 @@ public class mainController implements Initializable{
 			score.delete();
         });
 		
-		final Button StopButton = new Button( "Stop" );
+		final Button StopButton = new Button( "Save & Exit" );
 		StopButton.setLayoutX(589);
 		StopButton.setLayoutY(9);
 		StopButton.setOnAction(e -> {stop();});

@@ -21,8 +21,7 @@
                   <Font size="21.0" />
                </font>
             </Label>
-            <Button layoutX="326.0" layoutY="613.0" mnemonicParsing="false" onAction="#stop" prefHeight="31.0" prefWidth="111.0" text="Stop" />
-            <Button layoutX="161.0" layoutY="613.0" mnemonicParsing="false" onAction="#reset" prefHeight="31.0" prefWidth="133.0" text="Reset" />
+            <Button layoutX="326.0" layoutY="613.0" mnemonicParsing="false" onAction="#stop" prefHeight="31.0" prefWidth="111.0" text="Save &amp; Exit" />
             <Label layoutX="13.0" layoutY="106.0" prefHeight="31.0" prefWidth="271.0" text="Tempo da geração:">
                <font>
                   <Font size="21.0" />
@@ -49,7 +48,7 @@
                </font>
             </Label>
             <TextField fx:id="chanceExtremeMutation" layoutX="310.0" layoutY="400.0" prefHeight="25.0" prefWidth="91.0" />
-            <Button layoutX="28.0" layoutY="613.0" mnemonicParsing="false" onAction="#startGame" prefHeight="31.0" prefWidth="99.0" text="Start" />
+            <Button fx:id="startButton" layoutX="28.0" layoutY="613.0" mnemonicParsing="false" onAction="#startGame" prefHeight="31.0" prefWidth="99.0" text="Start" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
