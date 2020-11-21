@@ -15,6 +15,7 @@ public class Main extends Application {
 	public static Scene telaHome;
 	public static Scene telaLogin;
 	public static Scene telaCadastro;
+	public static User usuario;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception{

@@ -10,8 +10,8 @@
    <children>
       <Button layoutX="363.0" layoutY="460.0" mnemonicParsing="false" onAction="#login" prefHeight="56.0" prefWidth="115.0" text="Logar" />
       <Button layoutX="115.0" layoutY="460.0" mnemonicParsing="false" onAction="#telaCadastro" prefHeight="56.0" prefWidth="115.0" text="Cadastrar" />
-      <TextField layoutX="215.0" layoutY="227.0" />
-      <TextField layoutX="215.0" layoutY="278.0" />
+      <TextField fx:id="user" layoutX="215.0" layoutY="227.0" />
+      <TextField fx:id="pass" layoutX="215.0" layoutY="278.0" />
       <Text layoutX="150.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario:" />
       <Text layoutX="154.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Senha:" />
       <Text layoutX="68.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IA Learning to Drive" wrappingWidth="441.1640625">

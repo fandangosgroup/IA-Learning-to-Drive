@@ -100,4 +100,22 @@ public class UserDatabase implements Database<User>{
 		}
 		return bi;
 	}
+	
+	public static User getUser(String login, String pass) {
+		User user = null;
+		String query = "SELECT user_id, login, pass, email FROM user WHERE login = ? AND pass = ?";
+		try(Connection conn = ConnectionFactory.getConnetion()){
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1,login);
+			stmt.setString(2,pass);
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+			
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		return user;
+	}
 }

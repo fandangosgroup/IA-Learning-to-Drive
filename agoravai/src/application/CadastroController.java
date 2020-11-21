@@ -32,9 +32,9 @@ public class CadastroController {
 	public void cadastra() {
 		
 		try(Connection conn = ConnectionFactory.getConnetion()) {
-			//User u = new User(UserDatabase.getId(), user.getText(), senha.getText(), email.getText());
-			//Register rg = new Register(u);
-			//rg.register();
+			User u = new User(UserDatabase.getId(), user.getText(), senha.getText(), email.getText());
+			Register rg = new Register(u);
+			rg.register();
 			
 			Popup.display();
 		} catch (SQLException | NullPointerException e) {

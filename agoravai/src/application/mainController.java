@@ -103,7 +103,7 @@ public class mainController implements Initializable{
 		
 		//System.out.println(game.getChildren().toString());
 		this.nn = new NeuralNetwork();
-		this.track = new DrawTrack(UserDatabase.getId() - 1);
+		this.track = new DrawTrack(Main.usuario.getId());
 		this.setTrack();
 		collider = new Collider(this.track);
 		wf = new WaveFront(game, track);
